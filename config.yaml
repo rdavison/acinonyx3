@@ -169,7 +169,7 @@ outlines:
           # re-tranalte to new anchor position
           shift: [brickx , bricky]
       size: [brickw, brickh]
-      corner: px
+      corner: 1
   switches:
     - what: rectangle
       where: true
