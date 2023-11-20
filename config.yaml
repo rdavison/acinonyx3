@@ -1,14 +1,14 @@
 meta:
   engine: 4.0.4
-  name: samoklava
-  version: 0.3
-  author: soundmonnster
-  url: https://github.com/soundmonster/samoklava
+  name: acinonyx
+  version: 0.1
+  author: stronglytyped
+  url: https://github.com/rdavison/acinonyx
 units:
   kx: cx
   ky: cy
-  px: 2
-  py: 2
+  px: 4
+  py: 4
 points:
   key:
     footprints:
@@ -30,8 +30,14 @@ points:
           shift: [0, -5]
   zones:
     matrix:
+      rotate: 10
       key.padding: ky
       columns:
+        outer:
+          key:
+            stagger: 0 ky
+            spread: kx
+            column_net: col_outer
         pinky:
           key:
             stagger: 0 ky
@@ -39,13 +45,17 @@ points:
             column_net: col_pinky
         ring:
           key:
-            stagger: 0.7 ky
+            stagger: 0.5 ky
             spread: kx
+            splay: -5
+            origin: [-kx/2, -ky/2]
             column_net: col_ring
         middle:
           key:
             stagger: 0.2 ky
             spread: kx
+            splay: -5
+            origin: [-kx/2, -ky/2]
             column_net: col_middle
         index:
           key:
@@ -67,24 +77,24 @@ points:
     thumbfan:
       anchor:
         ref: matrix_inner_bottom
-        shift: [-0.5 kx, -1 ky]
+        shift: [-kx-kx/4, -1.2 ky]
+        rotate: 4
+      key:
+        spread: kx
       columns:
         near:
           key:
-            spread: kx
-            splay: -15
+            splay: 0
             origin: [-0.5 kx, -0.5 ky]
             column_net: col_middle
         home:
           key:
-            spread: kx
-            splay: -15
+            splay: -17
             origin: [-0.5 kx, -0.5 ky]
             column_net: col_index
         far:
           key:
-            spread: kx
-            splay: -15
+            splay: -17
             origin: [-0.5 kx, -0.5 ky]
             column_net: col_inner
       rows:
@@ -163,7 +173,7 @@ outlines:
       what: circle
       where:
         - ref: matrix_ring_home
-          shift: [-0.5 kx, 0 ky]
+          shift: [-0.55 kx, 0 ky]
       radius: 1.05
     bottom_left:
       what: circle
@@ -181,7 +191,7 @@ outlines:
       what: circle
       where:
         - ref: matrix_index_bottom
-          shift: [0, -1.06 ky]
+          shift: [-0.9 kx, -1.4 ky]
       radius: 1.05
     thumb:
       what: circle
@@ -393,7 +403,7 @@ pcbs:
             - matrix_pinky_bottom
           shift: [0.75 kx, 0]
         params:
-          text: "samoklava v0.3\\nby soundmonster"
+          text: "acinonyx v0.1\\nby stronglytyped"
           justify: left
       info_r:
         what: text
@@ -403,6 +413,5 @@ pcbs:
           shift: [0.75 kx, 0]
         params:
           layer: B.SilkS
-          text: "samoklava v0.3\\nby soundmonster"
+          text: "acinonyx v0.1\\nby stronglytyped"
           justify: right mirror
-
