@@ -298,8 +298,8 @@ pcbs:
         what: promicro
         where:
           ref:
-            - matrix_inner_top
-          shift: [20, -11]
+            - matrix_index_top
+          shift: [20+kx, -11]
           rotate: 270
         params:
           orientation: up
@@ -312,12 +312,13 @@ pcbs:
           P18: col_middle
           P19: col_ring
           P20: col_pinky
+          P21: col_outer
       mcu_r:
         what: promicro
         where:
           ref:
-            - matrix_inner_top
-          shift: [22.5, -12.25]
+            - matrix_index_top
+          shift: [22.5+kx, -12.25]
           rotate: 270
         params:
           orientation: down
