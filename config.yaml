@@ -194,32 +194,32 @@ outlines:
     top_left:
       what: circle
       where:
-        - ref: matrix_ring_home
-          shift: [-0.55 kx, 0 ky]
+        - ref: matrix_outer_top
+          shift: [0.2 kx, 1.3 ky]
       radius: 1.05
     bottom_left:
       what: circle
       where:
-        - ref: matrix_pinky_bottom
-          shift: [0.5 kx, 0]
+        - ref: matrix_outer_bottom
+          shift: [-0.55 kx, -1.05 ky]
       radius: 1.05
     top_right:
       what: circle
       where:
         - ref: matrix_inner_top
-          shift: [-0.5 kx, 0]
+          shift: [1.65 kx, 0.56 ky]
       radius: 1.05
     palm:
       what: circle
       where:
-        - ref: matrix_index_bottom
-          shift: [-1.1 kx, -1.4 ky]
+        - ref: matrix_middle_bottom
+          shift: [0 kx, -0.6 ky]
       radius: 1.05
     thumb:
       what: circle
       where:
-        - ref: thumbfan_far_thumb
-          shift: [-0.55 kx, 0]
+        - ref: matrix_inner_bottom
+          shift: [1.65 kx, -1.9 ky]
       radius: 1.05
   mounting_holes:
     $extends: outlines.screw_holes
@@ -239,9 +239,11 @@ outlines:
     - "-screw_holes"
   plate:
     - "keywell"
+    - "brick"
     - "+patch_thumb"
     - "-switches"
     - "-screw_holes"
+
 
   pcb:
     - "base_outline"
