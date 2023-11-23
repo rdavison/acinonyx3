@@ -5,8 +5,8 @@ meta:
   author: stronglytyped
   url: https://github.com/rdavison/acinonyx
 units:
-  kx: cx
-  ky: cy
+  kx: U
+  ky: U
   px: 4
   py: 4
   brickw: 6.5 kx + px + 11
@@ -16,8 +16,8 @@ units:
 points:
   key:
       footprints:
-      choc_hotswap:
-        type: choc
+      mx_hotswap:
+        type: mx
         params:
           hotswap: true
           reverse: true
