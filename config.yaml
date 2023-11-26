@@ -157,11 +157,11 @@ outlines:
   controller_area:
     - what: rectangle
       where:
-        - ref: matrix_inner_top
+        - ref: matrix_inner_home
           # re-tranalte to new anchor position
-          shift: [32/2 + 0 kx, 76.5/2 - 4.05 ky]
-      size: [32, 76.5]
-      corner: px
+          shift: [kx + 3, 0]
+      size: [20, 17.5]
+      corner: 4
   brick:
     - what: rectangle
       where:
@@ -188,7 +188,6 @@ outlines:
     #- "+thumbfan_glue"
   base_outline:
     - "keywell"
-    - "+controller_area"
     - "+brick"
   screw_holes:
     top_left:
@@ -209,12 +208,6 @@ outlines:
         - ref: matrix_inner_top
           shift: [1.65 kx, 0.56 ky]
       radius: 1.05
-    palm:
-      what: circle
-      where:
-        - ref: matrix_middle_bottom
-          shift: [0 kx, -0.6 ky]
-      radius: 1.05
     thumb:
       what: circle
       where:
@@ -229,8 +222,6 @@ outlines:
       radius: 2.05
     top_right:
       radius: 2.05
-    palm:
-      radius: 2.05
     thumb:
       radius: 2.05
   bottom_outline:
@@ -241,10 +232,10 @@ outlines:
     - "keywell"
     - "brick"
     - "+patch_thumb"
+    #- "-controller_area"
+    #- "-keycaps"
     - "-switches"
     - "-screw_holes"
-
-
   pcb:
     - "base_outline"
     # TODO use footprints with pad + via reinforcement as mounting holes
@@ -297,33 +288,22 @@ pcbs:
           from: "{{colrow}}"
           to: "{{row_net}}"
       mcu_l:
-        what: promicro
+        what: xiao
         where:
           ref:
             - matrix_index_top
           shift: [20+kx, -11]
-          rotate: 270
         params:
-          orientation: up
-          P4: row_top
-          P5: row_home
-          P6: row_bottom
-          P7: row_thumb
-          P14: col_inner
-          P15: col_index
-          P18: col_middle
-          P19: col_ring
-          P20: col_pinky
-          P21: col_outer
-      mcu_r:
-        what: promicro
-        where:
-          ref:
-            - matrix_index_top
-          shift: [22.5+kx, -12.25]
-          rotate: 270
-        params:
-          orientation: down
+          P0: row_top
+          P1: row_home
+          P2: row_bottom
+          P3: row_thumb
+          P4: col_inner
+          P5: col_index
+          P6: col_middle
+          P7: col_ring
+          P8: col_pinky
+          P9: col_outer
       pad_plus:
         what: pad
         where:
