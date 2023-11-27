@@ -1,19 +1,18 @@
+meta:
+  engine: 4.0.4
+  name: acinonyx
+  version: 0.1
+  author: stronglytyped
+  url: https://github.com/rdavison/acinonyx
 units:
-  # Size of each key. cx and cy for choc, u and U for MX.
   kx: cx
   ky: cy
-  # key spread and padding
   px: 4
   py: 4
-  # From that, get the spacing between keys
   brickw: 6.5 kx + px + 11
   brickh: 4.5 ky + py + 2
   brickx: 3
   bricky: -ky + 0
-
-  xiao_length: 21
-  xiao_width: 17.78
-
 points:
   zones:
     matrix:
@@ -71,17 +70,17 @@ points:
       key:
         spread: kx
       columns:
-        inner:
+        near:
           key:
             splay: 0
             origin: [-0.5 kx, -0.5 ky]
             column_net: col_middle
-        middle:
+        home:
           key:
             splay: -17
             origin: [-0.5 kx, -0.5 ky]
             column_net: col_index
-        home:
+        far:
           key:
             splay: -17
             origin: [-0.5 kx, -0.5 ky]
@@ -89,7 +88,9 @@ points:
       rows:
         thumb:
           row_net: row_thumb
-
+  # mirror: &mirror
+  #   ref: thumbfan_far_thumb
+  #   distance: 2.5kx
 outlines:
   # board dimensions according to JLCPCB: 122.28 mm x 101.05 mm
   raw:
@@ -103,11 +104,11 @@ outlines:
       points:
         - ref: matrix_inner_bottom
           shift: [0.5 kx + 0.5px, -0.5 ky + 0.5 py]
-        - ref: thumbfan_home_thumb
+        - ref: thumbfan_far_thumb
           shift: [0.5 kx - 0.5px, 0.5 ky + 0.5 py]
-        - ref: thumbfan_home_thumb
+        - ref: thumbfan_far_thumb
           shift: [0.5 kx - 0.5px, -0.5 ky - 0.5 py]
-        - ref: thumbfan_inner_thumb
+        - ref: thumbfan_near_thumb
           shift: [-0.5 kx + 0.5 px, -0.5 ky - 0.5 py]
         - ref: matrix_pinky_bottom
           shift: [0.5 kx - 0.5 py, -0.5 ky - 0.5 py]
@@ -265,102 +266,7 @@ outlines:
     - "base_outline"
     # TODO use footprints with pad + via reinforcement as mounting holes
     - "-mounting_holes"
-
 pcbs:
-  board:
-    outlines:
-      main:
-        outline: pcb
-    footprints:
-      choc_hotswap:
-        what: choc
-        where: true
-        params:
-          keycaps: true
-          reverse: true
-          hotswap: true
-          from: "{{colrow}}"
-          to: "{{column_net}}"
-      diode:
-        what: pad_diode
-        where: true
-        params:
-          from: "{{colrow}}"
-          to: "{{row_net}}"
-        adjust:
-          shift: [0, -0.3ky]
-      diode_via_1:
-        what: via
-        where: true
-        params:
-          net: "{{colrow}}"
-        adjust:
-          shift: [2.8, -0.3ky]
-      diode_via_2:
-        what: via
-        where: true
-        params:
-          net: "{{row_net}}"
-        adjust:
-          shift: [-2.8, -0.3ky]
-      key_via_1:
-        what: via
-        where: true
-        params:
-          net: "{{column_net}}"
-        adjust:
-          shift: [0, 3.67]
-      key_via_2:
-        what: via
-        where: true
-        params:
-          net: "{{colrow}}"
-        adjust:
-          shift: [0, 2.67]
-      xiao_flippable:
-        what: xiao_flippable
-        where:
-          ref: matrix_inner_top
-          shift: [0.5kx-(kx-xiao_width)/2 + 3, 0.5 ky - xiao_length - 3]
-          rotate: -90
-      raw_pad:
-        what: pad
-        where:
-          ref: matrix_inner_top
-          shift: [0.5kx-(kx-xiao_width)/2 + 3 + xiao_width/2, 0.5 ky - xiao_length - 3]
-        params:
-          net: RAW
-          width: 1.5
-          height: 1.5
-      battery_pads:
-        what: battery_pad
-        where:
-          ref: matrix_inner_top
-          shift: [0.5kx-(kx-xiao_width)/2 + 3 + xiao_width/2, 0.5 ky - xiao_length - 3 - 0.1ky]
-          rotate: 0
-        params:
-          plus: BAT+
-          minus: GND
-      slider_f:
-        what: slider
-        where:
-          ref: matrix_pinky_top
-          shift: [0, 1.25 ky]
-          rotate: -10
-        params:
-          from: BAT+
-          to: RAW
-          side: F
-      slider_b:
-        what: slider
-        where:
-          ref: matrix_pinky_top
-          shift: [0, 1.25 ky]
-          rotate: -10
-        params:
-          from: BAT+
-          to: RAW
-          side: B
   top_plate:
     outlines:
       edge:
@@ -381,4 +287,183 @@ pcbs:
       edge:
         outline: bottom_outline
         layer: Edge.Cuts
-  
+  board:
+    outlines:
+      edge:
+        outline: pcb
+        layer: Edge.Cuts
+    footprints:
+      choc_hotswap:
+        what: choc
+        where:
+          - /matrix_.*/
+          - /thumbfan_.*/
+        params:
+          hotswap: true
+          reverse: false
+          keycaps: true
+          from: "{{colrow}}"
+          to: "{{column_net}}"
+      diode:
+        what: diode
+        where:
+          - /matrix_.*/
+          - /thumbfan_.*/
+        adjust.shift: [0, -5]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+      mcu:
+        what: xiao_flippable
+        where:
+          ref:
+            - matrix_inner_home
+          shift: [1 kx + 3, 0.75 ky]
+        params:
+          P0: row_top
+          P1: row_home
+          P2: row_bottom
+          P3: row_thumb
+          P4: col_inner
+          P5: col_index
+          P6: col_middle
+          P7: col_ring
+          P8: col_pinky
+          P9: col_outer
+      # mcu_l:
+      #   what: promicro
+      #   where:
+      #     ref:
+      #       - matrix_index_top
+      #     shift: [20+kx, -11]
+      #     rotate: 270
+      #   params:
+      #     orientation: up
+      #     P4: row_top
+      #     P5: row_home
+      #     P6: row_bottom
+      #     P7: row_thumb
+      #     P14: col_inner
+      #     P15: col_index
+      #     P18: col_middle
+      #     P19: col_ring
+      #     P20: col_pinky
+      #     P21: col_outer
+      pad_plus:
+        what: pad
+        where:
+          ref:
+            - matrix_inner_top
+          shift: [23, -6]
+          rotate: 0
+        params:
+          front: true
+          back: true
+          width: 1.5
+          height: 1.5
+          text: "B+"
+          net: Bplus
+      pad_minus:
+        what: pad
+        where:
+          ref:
+            - matrix_inner_top
+          shift: [23, -3]
+          rotate: 0
+        params:
+          front: true
+          back: true
+          width: 1.5
+          height: 1.5
+          text: "B-"
+          net: GND
+      # trrs:
+      #   what: trrs_tight
+      #   where:
+      #     ref:
+      #       - matrix_inner_bottom
+      #     shift: [32, -15]
+      #     rotate: 270
+      #   params:
+      #     reverse: true
+      #     symmetric: false
+      #     # The naming of the nets on this footprint is different from the Corne schematics.
+      #     A: ""
+      #     B: VCC
+      #     C: GND
+      #     D: P0
+      jumper_l:
+        what: jumper
+        where:
+          ref:
+            - matrix_inner_bottom
+          shift: [23.5, 0]
+          rotate: 270
+        params:
+          side: B
+          from: Bplus
+          to: RAW
+      jumper_r:
+        what: jumper
+        where:
+          ref:
+            - matrix_inner_bottom
+          shift: [23.5, 0]
+          rotate: 270
+        params:
+          side: F
+          from: Bplus
+          to: RAW
+      slider_l:
+        what: slider_threeway
+        where:
+          ref:
+            - matrix_inner_bottom
+          shift: [30, 0]
+          rotate: 270
+        params:
+          side: F
+          from: RAW
+          left: Bplus
+          right: ''
+      slider_r:
+        what: slider_threeway
+        where:
+          ref:
+            - matrix_inner_bottom
+          shift: [30, 0]
+          rotate: 270
+        params:
+          side: B
+          from: RAW
+          left: ''
+          right: Bplus
+      reset:
+        what: reset_button
+        where:
+          ref:
+            - matrix_inner_bottom
+          shift: [17, 0]
+          rotate: 270
+        params:
+          from: GND
+          to: RST
+      info_l:
+        what: text
+        where:
+          ref:
+            - matrix_pinky_bottom
+          shift: [0.75 kx, 0]
+        params:
+          text: "acinonyx v0.1\\nby stronglytyped"
+          justify: left
+      info_r:
+        what: text
+        where:
+          ref:
+            - matrix_pinky_bottom
+          shift: [0.75 kx, 0]
+        params:
+          layer: B.SilkS
+          text: "acinonyx v0.1\\nby stronglytyped"
+          justify: right mirror
