@@ -24,7 +24,7 @@ module.exports = {
   },
   body: p => {
     return `
-  (footprint "xiao-ble" (layer "F.Cu")
+  (module "xiao-ble" (layer "F.Cu")
     (tstamp e731e554-812f-475b-93b0-e9f8c721c2a8)
     ${p.at /* parametric position */}
     (attr through_hole)
