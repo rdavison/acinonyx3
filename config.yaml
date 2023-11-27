@@ -269,8 +269,9 @@ outlines:
 pcbs:
   board:
     outlines:
-      main:
+      edge:
         outline: pcb
+        layer: Edge.Cuts
     footprints:
       choc_hotswap:
         what: choc
