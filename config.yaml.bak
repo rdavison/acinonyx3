@@ -16,8 +16,6 @@ units:
 points:
   zones:
     matrix:
-      anchor:
-        shift: [100, -100]
       rotate: 10
       key.padding: ky
       columns:
