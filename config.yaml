@@ -35,26 +35,26 @@ points:
             mirror.column_net: mirror_col_pinky
         ring:
           key:
-            stagger: 0.5 ky
-            splay: -5
+            stagger: 13
+            splay: -6
             origin: [-kx/2, -ky/2]
             column_net: col_ring
             mirror.column_net: mirror_col_ring
         middle:
           key:
-            stagger: 0.2 ky
-            splay: -5
+            stagger: 0.25 ky + 1
+            splay: -4
             origin: [-kx/2, -ky/2]
             column_net: col_middle
             mirror.column_net: mirror_col_middle
         index:
           key:
-            stagger: -0.2 ky
+            stagger: -0.25 ky
             column_net: col_index
             mirror.column_net: mirror_col_index
         inner:
           key:
-            stagger: -0.1 ky
+            stagger: -(4/25) ky
             column_net: col_inner
             mirror.column_net: mirror_col_inner
       rows:
@@ -111,14 +111,14 @@ outlines:
     - what: rectangle
       where:
         - ref: matrix_inner_home
-          shift: [kx + 3, -0.80 ky]
+          shift: [kx + 3, 0.50 ky]
       size: [20, 28.5]
       corner: 0
   battery_r:
     - what: rectangle
       where:
         - ref: mirror_matrix_inner_home
-          shift: [kx + 3, -0.80 ky]
+          shift: [kx + 3, 0.50 ky]
       size: [20, 28.5]
       corner: 0
   battery:
@@ -157,50 +157,52 @@ outlines:
     top_left:
       what: circle
       where:
-        - ref: matrix_outer_top
-          shift: [0.2 kx, 1.3 ky]
+        - ref: matrix_pinky_top
+          shift: [0.55 kx, 1.42 ky]
       radius: 1.05
     bottom_left:
       what: circle
       where:
-        - ref: matrix_outer_bottom
-          shift: [-0.55 kx, -1.05 ky]
+        - ref: matrix_middle_bottom
+          #shift: [-0.55 kx, -1.05 ky]
+          shift: [-3.3 kx, -2.20 ky]
       radius: 1.05
     top_right:
       what: circle
       where:
         - ref: matrix_inner_top
-          shift: [1.65 kx, 0.56 ky]
+          shift: [1.65 kx, 0.65 ky]
       radius: 1.05
     thumb:
       what: circle
       where:
         - ref: matrix_inner_bottom
-          shift: [1.65 kx, -1.9 ky]
+          shift: [1.65 kx, -1.8 ky]
       radius: 1.05
     mirror_top_left:
       what: circle
       where:
-        - ref: mirror_matrix_outer_top
-          shift: [0.2 kx, 1.3 ky]
+        - ref: mirror_matrix_pinky_top
+          shift: [0.55 kx, 1.42 ky]
       radius: 1.05
     mirror_bottom_left:
       what: circle
       where:
-        - ref: mirror_matrix_outer_bottom
-          shift: [-0.55 kx, -1.05 ky]
+        - ref: mirror_matrix_middle_bottom
+          #shift: [-0.55 kx, -1.05 ky]
+          shift: [-3.3 kx, -2.20 ky]
       radius: 1.05
     mirror_top_right:
       what: circle
       where:
         - ref: mirror_matrix_inner_top
-          shift: [1.65 kx, 0.56 ky]
+          shift: [1.65 kx, 0.65 ky]
       radius: 1.05
     mirror_thumb:
       what: circle
       where:
         - ref: mirror_matrix_inner_bottom
-          shift: [1.65 kx, -1.9 ky]
+          shift: [1.65 kx, -1.8 ky]
       radius: 1.05
   mounting_holes:
     $extends: outlines.screw_holes
@@ -255,9 +257,9 @@ pcbs:
         layer: Edge.Cuts
   board:
     outlines:
-      keycaps:
-        outline: keycaps
-        layer: F.SilkS
+      # keycaps:
+      #   outline: keycaps
+      #   layer: F.SilkS
       battery:
         outline: battery
         layer: F.SilkS
@@ -286,11 +288,12 @@ pcbs:
           from: "{{colrow}}"
           to: "{{row_net}}"
       mcu_l:
-        what: xiao
+        what: xiao2
         where:
           ref:
-            - matrix_inner_home
-          shift: [1 kx + 3, 0.75 ky]
+            - matrix_middle_top
+          shift: [-3 kx + 0.125 kx + 0.5, -0.25 ky + 1.5]
+          rotate: 90
         params:
           P0: row_top
           P1: row_home
@@ -314,11 +317,12 @@ pcbs:
           NFC0: NFC0
           NFC1: NFC1
       mcu_r:
-        what: xiao
+        what: xiao2
         where:
           ref:
-            - mirror_matrix_inner_home
-          shift: [1 kx + 3, 0.75 ky]
+            - mirror_matrix_middle_top
+          shift: [-3 kx + 0.125 kx + 0.5, -0.25 ky + 1.5]
+          rotate: 90
         params:
           P0: mirror_row_top
           P1: mirror_row_home
@@ -365,7 +369,7 @@ pcbs:
         where:
           ref:
             - matrix_inner_bottom
-          shift: [kx/2 + 11, -ky/2 - 5]
+          shift: [kx/2 + 11, ky/2]
           rotate: 0
         params:
           front: true
@@ -379,7 +383,7 @@ pcbs:
         where:
           ref:
             - matrix_inner_bottom
-          shift: [kx/2 + 4 + 11, -ky/2 - 5]
+          shift: [kx/2 + 4 + 11, ky/2]
           rotate: 0
         params:
           front: true
@@ -393,7 +397,7 @@ pcbs:
         where:
           ref:
             - mirror_matrix_inner_bottom
-          shift: [kx/2+11, -ky/2-5]
+          shift: [kx/2 + 11, ky/2]
           rotate: 0
         params:
           front: true
@@ -407,7 +411,7 @@ pcbs:
         where:
           ref:
             - mirror_matrix_inner_bottom
-          shift: [kx/2 + 4 + 11, -ky/2 - 5]
+          shift: [kx/2 + 4 + 11, ky/2]
           rotate: 0
         params:
           front: true
@@ -443,7 +447,8 @@ pcbs:
         where:
           ref:
             - matrix_middle_top
-          shift: [-2 kx, 0.25 ky]
+          #shift: [-2 kx, 0.25 ky]
+          shift: [-1.4 kx, 0.3 ky + 0.5]
           rotate: 0
         params:
           side: F
@@ -455,7 +460,8 @@ pcbs:
         where:
           ref:
             - mirror_matrix_middle_top
-          shift: [-2 kx, 0.25 ky]
+          #shift: [-2 kx, 0.25 ky]
+          shift: [-1.4 kx, 0.3 ky + 0.5]
           rotate: 0
         params:
           side: F
@@ -467,7 +473,7 @@ pcbs:
         where:
           ref:
             - matrix_middle_top
-          shift: [-2.75 kx, 0.25 ky]
+          shift: [-0.9 kx, 0.3 ky + 0.25]
           rotate: 0
         params:
           from: GND
@@ -477,7 +483,7 @@ pcbs:
         where:
           ref:
             - mirror_matrix_middle_top
-          shift: [-2.75 kx, 0.25 ky]
+          shift: [-0.9 kx, 0.3 ky + 0.25]
           rotate: 0
         params:
           from: mirror_GND
