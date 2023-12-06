@@ -1,0 +1,624 @@
+meta:
+    engine: 4.0.4
+    name: acinonyx
+    version: 0.1
+    author: stronglytyped
+    url: 'https://github.com/rdavison/acinonyx'
+units:
+    kx: cx
+    ky: cy
+    ppx: 4
+    ppy: 4
+    px: kx + ppx
+    py: ky + ppy
+    brickw: 6.5 kx + ppx + 11
+    brickh: 4.5 ky + ppy + 2
+    brickx: 3
+    bricky: '-ky + 0'
+points:
+    zones:
+        matrix:
+            rotate: 10
+            key:
+                spread: kx
+                padding: ky
+            columns:
+                outer:
+                    key:
+                        stagger: 0 ky
+                        column_net: col_outer
+                        mirror:
+                            column_net: mirror_col_outer
+                pinky:
+                    key:
+                        stagger: 0 ky
+                        column_net: col_pinky
+                        mirror:
+                            column_net: mirror_col_pinky
+                ring:
+                    key:
+                        stagger: 13
+                        splay: -6
+                        origin:
+                            - '-kx/2'
+                            - '-ky/2'
+                        column_net: col_ring
+                        mirror:
+                            column_net: mirror_col_ring
+                middle:
+                    key:
+                        stagger: 0.25 ky + 1
+                        splay: -4
+                        origin:
+                            - '-kx/2'
+                            - '-ky/2'
+                        column_net: col_middle
+                        mirror:
+                            column_net: mirror_col_middle
+                index:
+                    key:
+                        stagger: '-0.25 ky'
+                        column_net: col_index
+                        mirror:
+                            column_net: mirror_col_index
+                inner:
+                    key:
+                        stagger: '-(4/25) ky'
+                        column_net: col_inner
+                        mirror:
+                            column_net: mirror_col_inner
+            rows:
+                bottom:
+                    row_net: row_bottom
+                    mirror:
+                        row_net: mirror_row_bottom
+                home:
+                    row_net: row_home
+                    mirror:
+                        row_net: mirror_row_home
+                top:
+                    row_net: row_top
+                    mirror:
+                        row_net: mirror_row_top
+        thumbfan:
+            anchor:
+                ref: matrix_inner_bottom
+                shift:
+                    - '-kx-kx/4'
+                    - '-1.1 ky'
+                rotate: 4
+            key:
+                spread: kx
+            columns:
+                near:
+                    key:
+                        splay: 0
+                        origin:
+                            - '-0.5 kx'
+                            - '-0.5 ky'
+                        column_net: col_middle
+                        mirror:
+                            column_net: mirror_col_middle
+                home:
+                    key:
+                        splay: -17
+                        origin:
+                            - '-0.5 kx'
+                            - '-0.5 ky'
+                        column_net: col_index
+                        mirror:
+                            column_net: mirror_col_index
+                far:
+                    key:
+                        splay: -17
+                        origin:
+                            - '-0.5 kx'
+                            - '-0.5 ky'
+                        column_net: col_inner
+                        mirror:
+                            column_net: mirror_col_inner
+            rows:
+                thumb:
+                    row_net: row_thumb
+                    mirror:
+                        row_net: mirror_row_thumb
+    mirror:
+        ref: thumbfan_far_thumb
+        distance: 2.5kx
+outlines:
+    raw:
+        -
+            what: rectangle
+            where: true
+            asym: source
+            size:
+                - px
+                - py
+            corner: ppx
+    battery_l:
+        -
+            what: rectangle
+            where:
+                -
+                    ref: matrix_inner_home
+                    shift:
+                        - kx + 3
+                        - 0.50 ky
+            size:
+                - 20
+                - 28.5
+            corner: 0
+    battery_r:
+        -
+            what: rectangle
+            where:
+                -
+                    ref: mirror_matrix_inner_home
+                    shift:
+                        - kx + 3
+                        - 0.50 ky
+            size:
+                - 20
+                - 28.5
+            corner: 0
+    battery:
+        - battery_l
+        - battery_r
+    brick:
+        -
+            what: rectangle
+            where:
+                -
+                    ref: matrix_middle_home
+                    shift:
+                        - brickx
+                        - bricky
+            size:
+                - brickw
+                - brickh
+            corner: 1
+        -
+            what: rectangle
+            where:
+                -
+                    ref: mirror_matrix_middle_home
+                    shift:
+                        - brickx
+                        - bricky
+            size:
+                - brickw
+                - brickh
+            corner: 1
+    switches:
+        -
+            what: rectangle
+            where: true
+            asym: source
+            size: 14
+    keycaps:
+        -
+            what: rectangle
+            where: true
+            asym: source
+            size:
+                - kx
+                - ky
+            corner: 2
+    keywell:
+        - raw
+    base_outline:
+        - keywell
+        - +brick
+    screw_holes:
+        top_left:
+            what: circle
+            where:
+                -
+                    ref: matrix_pinky_top
+                    shift:
+                        - 0.55 kx
+                        - 1.42 ky
+            radius: 1.05
+        bottom_left:
+            what: circle
+            where:
+                -
+                    ref: matrix_middle_bottom
+                    shift:
+                        - '-3.3 kx'
+                        - '-2.20 ky'
+            radius: 1.05
+        top_right:
+            what: circle
+            where:
+                -
+                    ref: matrix_inner_top
+                    shift:
+                        - 1.65 kx
+                        - 0.65 ky
+            radius: 1.05
+        thumb:
+            what: circle
+            where:
+                -
+                    ref: matrix_inner_bottom
+                    shift:
+                        - 1.65 kx
+                        - '-1.8 ky'
+            radius: 1.05
+        mirror_top_left:
+            what: circle
+            where:
+                -
+                    ref: mirror_matrix_pinky_top
+                    shift:
+                        - 0.55 kx
+                        - 1.42 ky
+            radius: 1.05
+        mirror_bottom_left:
+            what: circle
+            where:
+                -
+                    ref: mirror_matrix_middle_bottom
+                    shift:
+                        - '-3.3 kx'
+                        - '-2.20 ky'
+            radius: 1.05
+        mirror_top_right:
+            what: circle
+            where:
+                -
+                    ref: mirror_matrix_inner_top
+                    shift:
+                        - 1.65 kx
+                        - 0.65 ky
+            radius: 1.05
+        mirror_thumb:
+            what: circle
+            where:
+                -
+                    ref: mirror_matrix_inner_bottom
+                    shift:
+                        - 1.65 kx
+                        - '-1.8 ky'
+            radius: 1.05
+    mounting_holes:
+        top_left:
+            what: circle
+            where:
+                -
+                    ref: matrix_pinky_top
+                    shift:
+                        - 0.55 kx
+                        - 1.42 ky
+            radius: 2.05
+        bottom_left:
+            what: circle
+            where:
+                -
+                    ref: matrix_middle_bottom
+                    shift:
+                        - '-3.3 kx'
+                        - '-2.20 ky'
+            radius: 2.05
+        top_right:
+            what: circle
+            where:
+                -
+                    ref: matrix_inner_top
+                    shift:
+                        - 1.65 kx
+                        - 0.65 ky
+            radius: 2.05
+        thumb:
+            what: circle
+            where:
+                -
+                    ref: matrix_inner_bottom
+                    shift:
+                        - 1.65 kx
+                        - '-1.8 ky'
+            radius: 2.05
+        mirror_top_left:
+            what: circle
+            where:
+                -
+                    ref: mirror_matrix_pinky_top
+                    shift:
+                        - 0.55 kx
+                        - 1.42 ky
+            radius: 2.05
+        mirror_bottom_left:
+            what: circle
+            where:
+                -
+                    ref: mirror_matrix_middle_bottom
+                    shift:
+                        - '-3.3 kx'
+                        - '-2.20 ky'
+            radius: 2.05
+        mirror_top_right:
+            what: circle
+            where:
+                -
+                    ref: mirror_matrix_inner_top
+                    shift:
+                        - 1.65 kx
+                        - 0.65 ky
+            radius: 2.05
+        mirror_thumb:
+            what: circle
+            where:
+                -
+                    ref: mirror_matrix_inner_bottom
+                    shift:
+                        - 1.65 kx
+                        - '-1.8 ky'
+            radius: 2.05
+    bottom_outline:
+        - base_outline
+        - '-screw_holes'
+    plate:
+        - keywell
+        - brick
+        - '-switches'
+        - '-screw_holes'
+    pcb:
+        - base_outline
+        - '-mounting_holes'
+pcbs:
+    top_plate:
+        outlines:
+            edge:
+                outline: plate
+                layer: Edge.Cuts
+        footprints:
+            jlc_order_number:
+                what: text
+                where:
+                    ref:
+                        - matrix_ring_home
+                    shift:
+                        - '-0.25 kx'
+                        - 0.5 ky
+                params:
+                    text: JLCJLCJLCJLC
+                    justify: left
+    bottom_plate:
+        outlines:
+            edge:
+                outline: bottom_outline
+                layer: Edge.Cuts
+    board:
+        outlines:
+            battery:
+                outline: battery
+                layer: F.SilkS
+            edge:
+                outline: pcb
+                layer: Edge.Cuts
+        footprints:
+            choc_hotswap:
+                what: choc
+                where:
+                    - /matrix_.*/
+                    - /thumbfan_.*/
+                params:
+                    hotswap: true
+                    reverse: false
+                    keycaps: true
+                    from: '{{colrow}}'
+                    to: '{{column_net}}'
+            diode:
+                what: diode
+                where:
+                    - /matrix_.*/
+                    - /thumbfan_.*/
+                adjust:
+                    shift:
+                        - 0
+                        - -5
+                params:
+                    from: '{{colrow}}'
+                    to: '{{row_net}}'
+            mcu_l:
+                what: xiao2
+                where:
+                    ref:
+                        - matrix_middle_top
+                    shift:
+                        - '-3 kx + 0.125 kx + 0.5'
+                        - '-0.25 ky + 1.5'
+                    rotate: 90
+                params:
+                    P0: row_top
+                    P1: row_home
+                    P2: row_bottom
+                    P3: row_thumb
+                    P4: col_inner
+                    P5: col_index
+                    P6: col_middle
+                    P7: col_ring
+                    P8: col_pinky
+                    P9: col_outer
+                    P10: P10
+                    RAW5V: RAW5V
+                    GND: GND
+                    RAW3V3: RAW3V3
+                    SWCLK: SWCLK
+                    SWDIO: SWDIO
+                    RST: RST
+                    BAT_POS: BAT_POS
+                    BAT_NEG: BAT_NEG
+                    NFC0: NFC0
+                    NFC1: NFC1
+            mcu_r:
+                what: xiao2
+                where:
+                    ref:
+                        - mirror_matrix_middle_top
+                    shift:
+                        - '-3 kx + 0.125 kx + 0.5'
+                        - '-0.25 ky + 1.5'
+                    rotate: 90
+                params:
+                    P0: mirror_row_top
+                    P1: mirror_row_home
+                    P2: mirror_row_bottom
+                    P3: mirror_row_thumb
+                    P4: mirror_col_inner
+                    P5: mirror_col_index
+                    P6: mirror_col_middle
+                    P7: mirror_col_ring
+                    P8: mirror_col_pinky
+                    P9: mirror_col_outer
+                    P10: mirror_P10
+                    RAW5V: mirror_RAW5V
+                    GND: mirror_GND
+                    RAW3V3: mirror_RAW3V3
+                    SWCLK: mirror_SWCLK
+                    SWDIO: mirror_SWDIO
+                    RST: mirror_RST
+                    BAT_POS: mirror_BAT_POS
+                    BAT_NEG: mirror_BAT_NEG
+                    NFC0: mirror_NFC0
+                    NFC1: mirror_NFC1
+            pad_plus_l:
+                what: pad
+                where:
+                    ref:
+                        - matrix_inner_bottom
+                    shift:
+                        - kx/2 + 11
+                        - ky/2
+                    rotate: 0
+                params:
+                    front: true
+                    back: true
+                    width: 1.5
+                    height: 1.5
+                    text: B+
+                    net: RAW
+            pad_minus_l:
+                what: pad
+                where:
+                    ref:
+                        - matrix_inner_bottom
+                    shift:
+                        - kx/2 + 4 + 11
+                        - ky/2
+                    rotate: 0
+                params:
+                    front: true
+                    back: true
+                    width: 1.5
+                    height: 1.5
+                    text: B-
+                    net: GND
+            pad_plus_r:
+                what: pad
+                where:
+                    ref:
+                        - mirror_matrix_inner_bottom
+                    shift:
+                        - kx/2 + 11
+                        - ky/2
+                    rotate: 0
+                params:
+                    front: true
+                    back: true
+                    width: 1.5
+                    height: 1.5
+                    text: B+
+                    net: mirror_RAW
+            pad_minus_r:
+                what: pad
+                where:
+                    ref:
+                        - mirror_matrix_inner_bottom
+                    shift:
+                        - kx/2 + 4 + 11
+                        - ky/2
+                    rotate: 0
+                params:
+                    front: true
+                    back: true
+                    width: 1.5
+                    height: 1.5
+                    text: B-
+                    net: mirror_GND
+            slider_l:
+                what: slider_threeway
+                where:
+                    ref:
+                        - matrix_middle_top
+                    shift:
+                        - '-1.4 kx'
+                        - 0.3 ky + 0.5
+                    rotate: 0
+                params:
+                    side: F
+                    from: RAW
+                    left: BAT_POS
+                    right: ''
+            slider_r:
+                what: slider_threeway
+                where:
+                    ref:
+                        - mirror_matrix_middle_top
+                    shift:
+                        - '-1.4 kx'
+                        - 0.3 ky + 0.5
+                    rotate: 0
+                params:
+                    side: F
+                    from: mirror_RAW
+                    left: ''
+                    right: mirror_BAT_POS
+            reset_l:
+                what: reset_button
+                where:
+                    ref:
+                        - matrix_middle_top
+                    shift:
+                        - '-0.9 kx'
+                        - 0.3 ky + 0.25
+                    rotate: 0
+                params:
+                    from: GND
+                    to: RST
+            reset_r:
+                what: reset_button
+                where:
+                    ref:
+                        - mirror_matrix_middle_top
+                    shift:
+                        - '-0.9 kx'
+                        - 0.3 ky + 0.25
+                    rotate: 0
+                params:
+                    from: mirror_GND
+                    to: mirror_RST
+            info_l:
+                what: text
+                where:
+                    ref:
+                        - matrix_pinky_bottom
+                    shift:
+                        - 0.75 kx
+                        - 0
+                params:
+                    text: acinonyx v0.1\nby stronglytyped
+                    justify: left
+            info_r:
+                what: text
+                where:
+                    ref:
+                        - matrix_pinky_bottom
+                    shift:
+                        - 0.75 kx
+                        - 0
+                params:
+                    layer: B.SilkS
+                    text: acinonyx v0.1\nby stronglytyped
+                    justify: right mirror
